@@ -41,7 +41,8 @@ class MockBrain(BaseLLM):
     def _ingest(self, messages: list[dict]) -> dict:
         k = {
             "listed": False, "reads": {}, "supplements": {}, "checks": {},
-            "slots": {}, "confirms": {}, "saves": [], "finalized": False,
+            "slots": {}, "confirms": {}, "rejected": {}, "approved": set(),
+            "saves": [], "finalized": False,
         }
         for m in messages:
             if m.get("role") != "tool":
@@ -54,6 +55,13 @@ class MockBrain(BaseLLM):
             elif name == "read_material":
                 for mat in res.get("materials", []):
                     k["reads"][mat["material_id"]] = mat
+                    # 外部已批准的确认单直接复用，不重复登记（闭环的关键）
+                    for c in mat.get("confirmations") or []:
+                        if c.get("answer") == "accept":
+                            k["confirms"].setdefault(mat["material_id"], c["confirmation_id"])
+                            k["approved"].add(mat["material_id"])
+                        elif c.get("answer") == "reject":
+                            k["rejected"][mat["material_id"]] = c["confirmation_id"]
             elif name == "lookup_supplement":
                 k["supplements"].setdefault(res.get("material_id"), {}).update(
                     {r["field"]: r["found"] for r in res.get("results", [])}
@@ -146,7 +154,7 @@ class MockBrain(BaseLLM):
                               f"排期前先查 {date} 的真实占用")
 
         for mid, p in plans.items():
-            if p.get("needs_conf") and mid not in k["confirms"]:
+            if p.get("needs_conf") and mid not in k["confirms"] and mid not in k["rejected"]:
                 if p["deviates"]:
                     q = f"{p['want']} 已被占用，是否改到 {p['time']}？"
                     reason = f"用户要求 {p['want']} 与已有排期冲突，需确认替代时段"
@@ -160,6 +168,13 @@ class MockBrain(BaseLLM):
                      "options": [p["time"], "改天", "取消"]},
                     f"{mid} 与用户要求不一致或有警告级风险，先登记待确认",
                 )
+
+        # 人工否决了替代方案：不再写草稿，转人工重新定时段
+        for mid, cid in k["rejected"].items():
+            p = plans.get(mid)
+            if p and p.get("deviates") and p.get("decision") != "block":
+                p["decision"] = "block"
+                p["block_reason"] = f"替代时段提案已被人为否决（{cid}），需人工重新指定时段"
 
         if not k["saves"]:
             items = []
@@ -200,7 +215,10 @@ class MockBrain(BaseLLM):
         decisions = []
         for mid, p in plans.items():
             if p.get("decision") == "block":
-                if p.get("missing"):
+                if p.get("block_reason"):
+                    reason = p["block_reason"]
+                    pending = ["等待人工指定新的发布时间", "确认后重新送审排期"]
+                elif p.get("missing"):
                     reason = f"必需字段缺失（{', '.join(p['missing'])}），外部素材库补查不到，需补件后复审"
                     pending = [f"向创作者补件：{f}" for f in p["missing"]] + ["补齐后重新送审"]
                 else:
@@ -223,7 +241,12 @@ class MockBrain(BaseLLM):
 
             reason = f"无阻断风险，{p['date']} {p['time']} 空闲并已写入草稿"
             if p["deviates"]:
-                reason = f"用户要求 {p['want']} 已被占用，改为 {p['time']} 并已登记待确认"
+                if mid in k["approved"]:
+                    reason = (f"用户要求 {p['want']} 已被占用，改用 {p['time']}；"
+                              f"该偏离已获人工批准（{k['confirms'].get(mid)}）")
+                    p["decision"] = "schedule"
+                else:
+                    reason = f"用户要求 {p['want']} 已被占用，改为 {p['time']} 并已登记待确认"
             elif p.get("needs_conf"):
                 reason = f"存在警告级风险，已登记待确认后写入 {p['time']} 草稿"
             decisions.append({

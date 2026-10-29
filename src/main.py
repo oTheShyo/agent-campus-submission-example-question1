@@ -50,6 +50,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--out", default=None, help="把 JSON 报告写到该路径")
     p.add_argument("--max-steps", type=int, default=None)
     p.add_argument("--max-tool-calls", type=int, default=None)
+    p.add_argument(
+        "--confirm-file",
+        default=None,
+        help="人工对确认单的答复文件，形如 {\"C001\": {\"answer\": \"accept\", \"answered_by\": \"ops\"}}；"
+             "这是确认单唯一的答复入口，模型无法代填",
+    )
     p.add_argument("--quiet", action="store_true", help="不打印人读摘要")
     return p
 
@@ -98,6 +104,24 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     spec["materials"] = _derive_materials(store, spec)
+
+    # 人工答复必须在工具跑起来之前写入：这是确认单从 pending 变成 accept/reject 的唯一通道
+    if args.confirm_file:
+        try:
+            answers = json.loads(Path(args.confirm_file).read_text(encoding="utf-8"))
+            if not isinstance(answers, dict):
+                raise ValueError("顶层必须是对象：{\"C001\": {\"answer\": \"accept\"}}")
+        except Exception as exc:
+            print(json.dumps({"status": "error", "error": f"confirm-file 读取失败：{exc}"},
+                             ensure_ascii=False))
+            return 1
+        spec["confirm_answers"] = store.apply_answers(answers)
+        applied = spec["confirm_answers"]["applied"]
+        bad = spec["confirm_answers"]["rejected"]
+        if bad:
+            print(f"[confirm-file] 忽略无效答复：{bad}", file=sys.stderr)
+        if applied:
+            print(f"[confirm-file] 已应用 {len(applied)} 条人工答复", file=sys.stderr)
 
     toolbox = ToolBox(store)
     if mode == "live":

@@ -138,6 +138,7 @@ class DataStore:
     # ---------- 确认记录 ----------
 
     def add_confirmation(self, material_id: str, question: str, options: list[str], reason: str) -> dict:
+        """由 Agent 工具创建。**只产生 pending**，答复权不在模型手里。"""
         seq = len([c for c in self.state["confirmations"]]) + 1
         rec = {
             "confirmation_id": f"C{seq:03d}",
@@ -146,6 +147,10 @@ class DataStore:
             "options": options,
             "reason": reason,
             "status": "pending",
+            "issued_by": "agent",      # 谁提出的
+            "answer": None,            # accept / reject / None=未答复
+            "answered_by": None,       # 谁答复的，只能来自 confirm-file
+            "answered_at": None,
             "created_at": _now(),
         }
         self.state["confirmations"].append(rec)
@@ -157,6 +162,51 @@ class DataStore:
             if c["confirmation_id"] == confirmation_id:
                 return c
         return None
+
+    def apply_answers(self, answers: dict) -> dict:
+        """把**运行之外的**人工答复写进确认单。
+
+        这是确认单从 pending 变为 accept/reject 的唯一入口，不挂在任何工具上，
+        模型无论怎么调工具都够不到它。answers 形如：
+            {"C001": {"answer": "accept", "answered_by": "ops@x", "note": "..."}}
+        未知 ID、重复答复、非法取值都会被拒绝并如实回报。
+        """
+        applied: list[dict] = []
+        rejected: list[dict] = []
+        for cid, payload in (answers or {}).items():
+            conf = self.get_confirmation(str(cid))
+            if conf is None:
+                rejected.append({"confirmation_id": cid, "reason": "UNKNOWN_CONFIRMATION"})
+                continue
+            if conf.get("answer"):
+                rejected.append({"confirmation_id": cid, "reason": "ALREADY_ANSWERED",
+                                 "current": conf["answer"]})
+                continue
+            answer = str((payload or {}).get("answer") or "").lower()
+            if answer not in ("accept", "reject"):
+                rejected.append({"confirmation_id": cid, "reason": "INVALID_ANSWER",
+                                 "got": (payload or {}).get("answer")})
+                continue
+            conf["answer"] = answer
+            conf["status"] = "accepted" if answer == "accept" else "rejected"
+            conf["answered_by"] = str((payload or {}).get("answered_by") or "unknown")
+            conf["answered_at"] = _now()
+            conf["answer_note"] = (payload or {}).get("note")
+            if answer == "reject":
+                # 人否决了这个偏离方案，之前基于它写的草稿必须一起作废，否则它还在占时段
+                for d in self.state["drafts"]:
+                    if (d.get("status") == "active"
+                            and d.get("material_id") == conf["material_id"]
+                            and d.get("confirmation_id") == conf["confirmation_id"]):
+                        d["status"] = "withdrawn"
+                        d["withdrawn_at"] = conf["answered_at"]
+                        d["withdrawn_reason"] = "confirmation_rejected"
+            applied.append({"confirmation_id": cid, "answer": answer,
+                            "answered_by": conf["answered_by"]})
+
+        if applied:
+            self._write_state()
+        return {"applied": applied, "rejected": rejected}
 
     # ---------- 草稿写入 ----------
 

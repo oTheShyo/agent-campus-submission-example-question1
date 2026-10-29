@@ -195,6 +195,7 @@ def validate_save(store, items: list[dict]) -> tuple[list[dict], list[dict]]:
     拒绝码：
       MATERIAL_NOT_FOUND / INVALID_SLOT / BLOCKING_RISK / SLOT_OCCUPIED
       DEVIATION_WITHOUT_CONFIRMATION / UNKNOWN_CONFIRMATION / DUPLICATE_ITEM
+      CONFIRMATION_REJECTED（人工已拒绝该偏离方案）
     """
     accepted: list[dict] = []
     rejected: list[dict] = []
@@ -204,6 +205,7 @@ def validate_save(store, items: list[dict]) -> tuple[list[dict], list[dict]]:
         mid = str(item.get("material_id") or "")
         date = str(item.get("date") or "")
         time = norm_time(item.get("time") or "")
+        conf: dict | None = None
 
         def reject(code: str, reason: str, **extra: Any) -> None:
             rejected.append({"material_id": mid, "error_code": code, "reason": reason, **extra})
@@ -263,6 +265,15 @@ def validate_save(store, items: list[dict]) -> tuple[list[dict], list[dict]]:
             if conf["material_id"] != mid:
                 reject("UNKNOWN_CONFIRMATION", f"确认单 {cid} 属于素材 {conf['material_id']}，不能用于 {mid}。")
                 continue
+            # 人工明确拒绝过的方案不允许再落草稿（此前这是个漏洞）
+            if conf.get("answer") == "reject":
+                reject(
+                    "CONFIRMATION_REJECTED",
+                    f"确认单 {cid} 已被人为拒绝（{conf.get('answered_by')}），"
+                    f"不能再按 {date} {time} 保存草稿；请改选时段或阻断。",
+                    confirmation_id=str(cid),
+                )
+                continue
 
         accepted.append(
             {
@@ -272,6 +283,7 @@ def validate_save(store, items: list[dict]) -> tuple[list[dict], list[dict]]:
                 "requested_at": requested_at,
                 "deviates_from_request": deviates,
                 "confirmation_id": str(cid) if cid else None,
+                "confirmation_answer": (conf.get("answer") if deviates and cid else None),
             }
         )
 

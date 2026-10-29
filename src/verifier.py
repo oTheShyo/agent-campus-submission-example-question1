@@ -25,6 +25,7 @@ CRITICAL_FLAGS = {
     "DEVIATION_WITHOUT_CONFIRMATION",
     "MISSING_DECISION",
     "SAVE_FAILED_WITHOUT_ATTEMPT",
+    "FORGED_CONSENT",
 }
 
 
@@ -119,6 +120,9 @@ def build_report(store, toolbox, spec: dict, meta) -> dict:
                     "suggested_slot": None,
                     "draft": {"status": "not_attempted", "draft_id": None, "revision": None,
                               "deduplicated": False, "error_code": "MATERIAL_NOT_FOUND", "message": None},
+                    "consent_status": "not_required",
+                    "effective_status": "not_scheduled",
+                    "confirmations": [],
                     "pending_confirmations": [],
                     "decision": None,
                     "decision_reason": None,
@@ -226,6 +230,66 @@ def build_report(store, toolbox, spec: dict, meta) -> dict:
                 "status": "pending", "options": [], "source": "derived_from_rules",
             })
 
+        # ---- 同意状态：只从确认单的**人工答复**推导，模型口述不参与 ----
+        rel_confs = [c for c in confs.get(mid, [])
+                     if c["confirmation_id"] in run_conf_ids or c["confirmation_id"] == own_conf]
+        own_rec = store.get_confirmation(own_conf) if own_conf else None
+        # 该素材最近一次**有人答复过**的确认单：跨轮次看，否则"人已否决"这件事会丢
+        latest_answered = next(
+            (c for c in reversed(confs.get(mid, [])) if c.get("answer")), None)
+        if latest_answered and latest_answered.get("answer") == "reject":
+            # 人否决过（哪怕本轮没写草稿），同意状态就是 rejected，不能报成 not_required
+            consent_status = "rejected"
+            if not rel_confs:
+                rel_confs = [latest_answered]
+        elif not slot_changed:
+            consent_status = "not_required"
+        elif own_rec is not None and own_rec.get("answer") == "accept":
+            consent_status = "granted"
+        elif own_rec is not None and own_rec.get("answer") == "reject":
+            consent_status = "rejected"
+        else:
+            consent_status = "pending"
+        if own_rec and own_rec.get("answer") == "accept" and not own_rec.get("answered_by"):
+            # answer 只有 apply_answers 能写，正常不会走到这里；留着防未来改动把口子放开
+            flags.append("FORGED_CONSENT")
+            consent_status = "pending"
+
+        # 事实推导的结论状态，与模型自述的 decision 并列输出，两者不一致即暴露出来。
+        # 注意：consent_status 只描述"时段偏离是否获准"，警告级风险也需要人确认，
+        # 所以这里还要看是否仍有未答复的待确认项。
+        if draft["status"] in ("saved", "deduplicated"):
+            if consent_status == "rejected":
+                effective_status = "blocked"
+            elif consent_status == "granted":
+                effective_status = "scheduled"
+            elif consent_status == "pending" or pending:
+                effective_status = "pending_confirmation"
+            else:
+                effective_status = "scheduled"
+        elif draft["status"] == "failed":
+            effective_status = "save_failed"
+        elif review_status in ("blocked", "missing_info") or consent_status == "rejected":
+            effective_status = "blocked"
+        else:
+            effective_status = "not_scheduled"
+        if decision and decision["decision"] == "pending_confirmation" and effective_status == "scheduled":
+            flags.append("STALE_PENDING_DECISION")
+
+        conf_view = [
+            {
+                "confirmation_id": c["confirmation_id"],
+                "question": c["question"],
+                "status": c["status"],
+                "issued_by": c.get("issued_by", "agent"),
+                "answer": c.get("answer"),
+                "answered_by": c.get("answered_by"),
+                "answered_at": c.get("answered_at"),
+                "answer_note": c.get("answer_note"),
+            }
+            for c in rel_confs
+        ]
+
         items.append(
             {
                 "material_id": mid,
@@ -236,6 +300,9 @@ def build_report(store, toolbox, spec: dict, meta) -> dict:
                 "requested_slot": req_at,
                 "suggested_slot": suggested,
                 "slot_changed": slot_changed,
+                "consent_status": consent_status,
+                "effective_status": effective_status,
+                "confirmations": conf_view,
                 "draft": {
                     "status": draft["status"],
                     "draft_id": draft.get("draft_id"),
@@ -273,6 +340,7 @@ def build_report(store, toolbox, spec: dict, meta) -> dict:
             "request_id": spec.get("request_id"),
             "operator": spec.get("operator"),
             "focus_date": spec.get("focus_date"),
+            "confirm_answers": (spec.get("confirm_answers") or {}).get("applied") or [],
         },
         "budget": {
             "steps_used": meta.steps,
@@ -290,6 +358,9 @@ def build_report(store, toolbox, spec: dict, meta) -> dict:
             "drafts_failed": draft_counts["failed"],
             "drafts_not_attempted": draft_counts["not_attempted"],
             "pending_confirmations": sum(len(i["pending_confirmations"]) for i in items),
+            "consent_granted": sum(1 for i in items if i["consent_status"] == "granted"),
+            "consent_pending": sum(1 for i in items if i["consent_status"] == "pending"),
+            "consent_rejected": sum(1 for i in items if i["consent_status"] == "rejected"),
             "critical_flags": critical,
         },
     }

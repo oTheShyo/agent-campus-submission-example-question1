@@ -339,6 +339,18 @@ class ToolBox:
                         f for f in self.store.optional_fields if flatten_fields(mat).get(f) in (None, "")
                     ],
                     "already_scheduled": scheduled or mat.get("status") == "scheduled",
+                    # 让模型看得到历史确认单及其人工答复，重跑时才知道"已经有人同意了"
+                    "confirmations": [
+                        {
+                            "confirmation_id": c["confirmation_id"],
+                            "question": c["question"],
+                            "status": c["status"],
+                            "answer": c.get("answer"),
+                            "answered_by": c.get("answered_by"),
+                        }
+                        for c in self.store.state["confirmations"]
+                        if c["material_id"] == mat["material_id"]
+                    ],
                 }
             )
         return {"ok": True, "count": len(out), "materials": out, "unknown_ids": unknown}
@@ -443,7 +455,12 @@ class ToolBox:
             "confirmation_id": rec["confirmation_id"],
             "material_id": rec["material_id"],
             "status": "pending",
-            "note": "已登记待确认项，用户尚未同意；该凭证只表示可以带着偏离写入草稿。",
+            "issued_by": "agent",
+            "answer": None,
+            "note": (
+                "已登记待确认项。该凭证只允许你带着偏离写入草稿，不代表用户已同意——"
+                "同意与否只能由运行之外的人类答复（--confirm-file）决定，你无法自行改变 answer。"
+            ),
         }
 
     def _tool_save_schedule_draft(self, items: list[dict] | None = None) -> dict:
@@ -476,6 +493,12 @@ class ToolBox:
                 "rejected": rejected,
                 "retryable": True,
             }
+        # 把人工答复状态回填进保存回执，让模型看得到"有没有人真的同意"
+        amap = {a["material_id"]: a for a in accepted}
+        for s in saved:
+            a = amap.get(s.get("material_id"))
+            s["confirmation_answer"] = a.get("confirmation_answer") if a else None
+            s["confirmation_id"] = a.get("confirmation_id") if a else None
         return {
             "ok": True,
             "saved": saved,
