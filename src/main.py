@@ -80,12 +80,15 @@ def main(argv: list[str] | None = None) -> int:
     mode = args.mode or os.getenv("AGENT_MODE", "mock")
     stem = input_path.stem.replace(".input", "")
     state_path = Path(args.state) if args.state else ROOT / "var" / f"{stem}.state.json"
+    # 默认 trace 写到 var/，避免随手跑一次就改写仓库里已提交的示例产物；
+    # scripts/run_examples.py 会显式指定 examples/traces/ 下的路径。
+    default_trace = ROOT / "var" / "traces" / mode / f"{stem}.jsonl"
     if args.trace == "none":
         trace_path = None
     elif args.trace:
         trace_path = Path(args.trace)
     else:
-        trace_path = ROOT / "examples" / "traces" / mode / f"{stem}.jsonl"
+        trace_path = default_trace
 
     fault = os.getenv("SCHEDULER_FAULT", "")
     try:

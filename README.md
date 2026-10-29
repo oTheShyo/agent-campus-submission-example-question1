@@ -24,7 +24,8 @@ python -m src.main --input examples/case1_normal.input.json
 python scripts/run_examples.py --mode mock
 ```
 
-每个用例的 `stdout` 是 JSON 报告，`stderr` 是人读摘要，trace 落在 `examples/traces/mock/`。
+每个用例的 `stdout` 是 JSON 报告，`stderr` 是人读摘要。
+单次运行默认把 trace 写到 `var/traces/<mode>/`（`var/` 不入库）；批量跑时 trace 落在 `examples/traces/`。
 
 ## 2. 跑真实模型
 

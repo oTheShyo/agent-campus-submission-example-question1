@@ -35,7 +35,7 @@
     "name": "case5_duplicate.run1",
     "exit": 0,
     "status": "completed",
-    "elapsed": 0.5,
+    "elapsed": 0.6,
     "output": "examples\\case5_duplicate.run1.output.mock.json",
     "trace": "examples\\traces\\mock\\case5_duplicate.run1.jsonl"
   },
