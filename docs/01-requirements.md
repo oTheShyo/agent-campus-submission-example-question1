@@ -65,7 +65,7 @@ consistency_flags[]  交叉校验发现的矛盾
 不做（明确写在限制里）：
 
 - 不接真实发布接口，不调平台 API
-- 不做审批流的闭环（待确认项只登记，不等待人回答后继续）
+- 不接真实审批系统：`--confirm-file` 只模拟人工答复，没有权限校验、审批 UI 与答复留痕
 - 不做多 Agent 协作、不做 Web 界面、不做线上部署
 - 不做并发的排期锁
 
@@ -82,9 +82,11 @@ consistency_flags[]  交叉校验发现的矛盾
 | 重复提交 | 同一请求第二次保存 → `draft.status=deduplicated`，库中仍只有一份草稿，revision 不变 |
 | 保存失败 | `draft.status=failed` + `error_code`，且存储文件字节不变，绝不出现 `saved` |
 
-另加两条自设标准：
+另加三条自设标准：
 
 - **越权可判定**：任何报告里的 `draft.status` 必须有对应工具回执；无回执即 `incomplete`。
+- **同意主体可判定**：`consent_status=granted` 必须来自 `--confirm-file` 的人工答复并带人名；
+  模型自称"用户已同意"不产生任何效果。
 - **可复现**：`python scripts/run_examples.py --mode mock` 5 秒内跑完全部用例，无需 key。
 
 ## 7. 关键假设（评审时请注意）

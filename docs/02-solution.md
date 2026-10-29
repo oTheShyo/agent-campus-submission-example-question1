@@ -50,20 +50,19 @@
 | # | 模型动作 | 工具参数 | 观察到什么 | 模型的依据（trace 原文摘录） |
 |---|---|---|---|---|
 | 1 | `list_pending_materials` | `2026-11-01` | 当天 5 条待处理，M01 在列 | 「先列出待处理素材，确认 M01 在列」 |
-| 2 | `read_material` | `["M01"]` | 字段齐全 | 「字段齐全，无缺失」 |
-| 3 | `check_rules` | `["M01"]`, 11-01 | 无风险、无阻断 | 「无风险、无阻断」 |
-| 4 | `query_slots` | `2026-11-01` | 18:00 被 M10 占，19:00/20:00 空闲 | 「确认 18:00 是否可用」 |
-| 5 | `query_slots` | `from_time=18:00` | 18:00 之后只剩 19:00、20:00 | 「18:00 已被 M10 占用，与客户指定时段冲突，查 18:00 之后还有哪些空闲」 |
-| 6 | `request_confirmation` | 「18:00 被占，改 19:00？」 | `C001`，pending | 「客户指定时段是硬性要求，冲突需走确认流程，先登记待确认项」 |
-| 7 | `save_schedule_draft` | `19:00` + `C001` | `D001` rev1 写入 | 「已拿到 confirmation_id，带凭证保存草稿」 |
-| 8 | `finalize` | decisions 被截断成非法 JSON | `INVALID_DECISIONS` | 「finalize 解析失败，我重新以对象数组形式提交」 |
-| 9 | `finalize` | 合法对象数组 | accepted=1 | 收敛结束 |
+| 2 | `read_material` | `["M01"]` | 字段齐全 | 「M01 在列。读取 M01 的字段详情」 |
+| 3 | `check_rules` | `["M01"]` + `planned_date` | 无风险、无阻断 | 「字段齐全，无需补查。检查审核风险」 |
+| 4 | `query_slots` | `date` + `for_material_ids=["M01"]` | 18:00 被 M10 占，19:00/20:00 空闲 | 「无风险、无阻断。查询当天时段占用」 |
+| 5 | `request_confirmation` | 「18:00 被 M10 占，改 19:00？」 | `C001`，`pending`、`issued_by=agent` | 「与用户硬性要求冲突，最接近的空闲时段是 19:00，按流程登记待确认项」 |
+| 6 | `save_schedule_draft` | `19:00` + `C001` | `D001` rev1 写入，`confirmation_answer=null` | 「已拿到 C001，继续把草稿写到最接近的 19:00」 |
+| 7 | `finalize` | decisions 被截断成非法 JSON | `INVALID_DECISIONS` | 「提交最终结论」 |
+| 8 | `finalize` | 合法对象数组 | accepted=1 | 「参数格式有误，重新以对象数组提交」，收敛结束 |
 
 报告呈现为：`requested_slot=2026-11-01T18:00`、`suggested_slot=2026-11-01 19:00`、
 `slot_changed=true`、`draft.status=saved`、`pending_confirmations=[C001]`。
 
 这段轨迹来自 `examples/traces/live/case4_slot_conflict.jsonl`，是真实模型跑出来的，不是设计稿。
-第 8~9 步值得单独看：模型输出被长度截断成非法 JSON，工具返回一个可读的错误码，
+第 7~8 步值得单独看：模型输出被长度截断成非法 JSON，工具返回一个可读的错误码，
 模型自己重发正确格式并收敛——这就是"观察结果 → 调整下一步"最直接的证据。
 
 另外补一条：如果模型**没查就直接去存 18:00**，`save_schedule_draft` 会用 `SLOT_OCCUPIED` 拒掉
@@ -92,6 +91,16 @@
 拆开以后，护栏可以在 `save` 时校验凭证的**来源**（是不是本素材的、是不是真实存在），
 而不是相信模型传了一个 `skip_check=true`。
 
+**为什么"同意"不是这个工具能给的？**
+
+`request_confirmation` 只写 `pending`，`answer` 字段永远是 `null`——模型调一百次也变不成
+`accepted`。唯一的写入口是 `store.apply_answers()`，它只被 CLI 的 `--confirm-file` 调用，
+不挂在任何工具上。这样"用户同意"就有了明确的主体：模型提出，人答复。
+
+如果让模型自己填 `answer`，那题目里"未经用户同意不得擅自改变硬性要求"就退化成了
+"模型自己说它同意了"——这句话谁都会说。报告里的 `consent_status` 也只认
+确认单上的 `answer` 和 `answered_by`，模型在 `reason` 里写"用户已同意"不会改变任何字段。
+
 **为什么 `read_material` / `check_rules` 收数组？**
 
 限流。USTC 端点的 key 是 20 RPM，一条素材一次调用的话，3 条素材光读取就 3 次。
@@ -119,6 +128,7 @@
 | `SLOT_OCCUPIED` | 目标时段被基线排期、输入补充排期或他人草稿占用 |
 | `DEVIATION_WITHOUT_CONFIRMATION` | 目标时段 ≠ 用户要求，且没带 `confirmation_id` |
 | `UNKNOWN_CONFIRMATION` | 凭证不存在，或属于别的素材 |
+| `CONFIRMATION_REJECTED` | 凭证已被人工拒绝（`answer=reject`），不允许再按该方案写草稿 |
 | `DUPLICATE_ITEM` | 同一次请求里同一素材出现两次 |
 
 其中 `BLOCKING_RISK` 是**保存时重算**的，不是复用模型之前 `check_rules` 的结论。

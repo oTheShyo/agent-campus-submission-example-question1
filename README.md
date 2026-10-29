@@ -67,7 +67,7 @@ src/
   mock_brain.py 离线确定性策略（仅验证流程）
   report.py     人读摘要渲染
 data/           12 条合成素材、8 条审核规则、基线排期、补查索引
-tests/          76 条测试，全部离线
+tests/          85 条测试，全部离线
 examples/       输入、实际输出、trace、对照表
 docs/           5 份文档
 ```
@@ -93,13 +93,32 @@ docs/           5 份文档
 3. **虚报保存成功会被抓住。** 若模型声称 `schedule` 但账本里没有成功保存回执，
    verifier 会把草稿状态降级为 `failed` 并打上 `CLAIMS_SCHEDULED_WITHOUT_RECEIPT`，
    整个运行标记为 `incomplete`。
+4. **"用户同意"不由模型提供。** `request_confirmation` 只产生 `pending`；答复只能来自运行之外的
+   `--confirm-file`（人工填写）。模型自称"用户已同意"不会改变任何字段。报告里 `consent_status`
+   取 `not_required / pending / granted / rejected` 四值，`granted` 必须有人名与时间。
+
+### 人工答复确认单（把 pending 走完）
+
+```bash
+# 第一轮：模型登记确认单 C001，草稿已写但挂待确认
+python -m src.main --input examples/case4_slot_conflict.input.json \
+                   --state var/run.state.json --out var/r1.json
+
+# 人工答复后重跑：同意 → granted；同意之外的答复见 examples/confirm.reject.json
+python -m src.main --input examples/case4_slot_conflict.input.json \
+                   --state var/run.state.json --confirm-file examples/confirm.accept.json \
+                   --out var/r2.json
+```
+
+三态实测结果在 `examples/consent/`：`pending → granted → rejected` 分别对应
+`saved / deduplicated / not_attempted`，其中 reject 会把先前那份草稿标为 `withdrawn` 并释放时段。
 
 ## 6. 已知限制
 
-- **只接了一个模型做主干。** 没有跨模型一致性对比，样本量小（8 个用例），
+- **只接了一个模型做主干。** 没有跨模型一致性对比，样本量小（9 个用例、单模型、每例一次），
   结论是"这几条路径上行为正确"，不是"沙箱外普适正确"。
-- **待确认项只登记不闭环。** `request_confirmation` 记录的问题需要人回答，
-  本项目没有实现"人回答后回填并重新执行"的二次循环，草稿停在待确认状态等待处理。
+- **待确认闭环靠文件，不是审批系统。** `--confirm-file` 能把 `pending` 推进到 `granted`/`rejected`，
+  但没有审批 UI、没有权限校验、没有答复留痕库；生产环境应接工单或审批流，而不是一个 JSON 文件。
 - **时段网格是固定整点。** 真实业务可能需要 15 分钟粒度、平台差异化时段、节假日规则。
 - **规则引擎是确定性的。** 敏感词用字面匹配，没有语义判定；换成模型判定会引入不确定性，
   但也有必要——现在这版会把"最强大脑"这类正常表达误判成敏感词。
@@ -110,7 +129,7 @@ docs/           5 份文档
 ## 7. 复核建议
 
 ```bash
-python -m pytest -q -p no:cacheprovider        # 76 passed
+python -m pytest -q -p no:cacheprovider        # 85 passed
 python scripts/run_examples.py --mode mock     # 8 个用例，约 5 秒
 ```
 
