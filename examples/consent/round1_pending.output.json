@@ -1,0 +1,91 @@
+{
+  "run_id": "case4-conflict",
+  "mode": "mock",
+  "model": "mock-deterministic",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T23:26:18+08:00",
+  "finished_at": "2026-10-29T23:26:18+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case4-conflict",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
+  },
+  "budget": {
+    "steps_used": 7,
+    "max_steps": 12,
+    "tool_calls_used": 7,
+    "max_tool_calls": 16,
+    "tokens": 0
+  },
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋冬粉底液实测｜干皮上脸 8 小时",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T18:00",
+      "suggested_slot": "2026-11-01 19:00",
+      "slot_changed": true,
+      "consent_status": "pending",
+      "effective_status": "pending_confirmation",
+      "confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "18:00 已被占用，是否改到 19:00？",
+          "status": "pending",
+          "issued_by": "agent",
+          "answer": null,
+          "answered_by": null,
+          "answered_at": null,
+          "answer_note": null
+        }
+      ],
+      "draft": {
+        "status": "saved",
+        "draft_id": "D001",
+        "revision": 1,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "18:00 已被占用，是否改到 19:00？",
+          "reason": "用户要求 18:00 与已有排期冲突，需确认替代时段",
+          "status": "pending",
+          "options": [
+            "19:00",
+            "改天",
+            "取消"
+          ],
+          "source": "confirmation"
+        }
+      ],
+      "decision": "pending_confirmation",
+      "decision_reason": "用户要求 18:00 已被占用，改为 19:00 并已登记待确认",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 1,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 0,
+    "pending_confirmations": 1,
+    "consent_granted": 0,
+    "consent_pending": 1,
+    "consent_rejected": 0,
+    "critical_flags": []
+  },
+  "trace_path": null
+}

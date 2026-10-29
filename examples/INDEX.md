@@ -14,6 +14,37 @@
 | 重复提交 | case5（两次运行） | `case1_normal.input.json` + `case5_duplicate.input.json` | `case5_duplicate.run1.output.json` / `case5_duplicate.run2.output.json` | `traces/live/case5_duplicate.run{1,2}.md` | 同名 `.mock.json` |
 | 保存失败 | case6 | `case6_save_failure.input.json` | `case6_save_failure.output.json` | `traces/live/case6_save_failure.md` | 同名 `.mock.json` |
 | 换占用时段再提交 | case7 | `case7_rerun_conflict.input.json` | `case7_rerun_conflict.output.json` | `traces/live/case7_rerun_conflict.md` | 同名 `.mock.json` |
+| 触达步数上限返回未完成 | case8 | 复用 `case4_slot_conflict.input.json` | `case8_step_limit.output.json` | `traces/live/case8_step_limit.md` | `case8_step_limit.output.mock.json` |
+
+case8 不是新输入，而是把 case4 压到 3 步（`--max-steps 3`）跑出来的。复现命令：
+
+```bash
+python -m src.main --input examples/case4_slot_conflict.input.json --mode live \
+  --state var/b.state.json --out examples/case8_step_limit.output.json \
+  --trace examples/traces/live/case8_step_limit.jsonl --max-steps 3
+# 期望：status=incomplete、stop_reason=step_cap、draft.status=not_attempted、退出码 2
+```
+
+## 人工同意闭环（pending → granted / rejected）
+
+`examples/consent/` 是同一份 state 在三种答复下的结果，输入均复用 `case4_slot_conflict`，
+模式为 mock（这里验的是流程与状态机，不是模型决策）：
+
+| 文件 | 人工答复 | `consent_status` | `effective_status` | `draft.status` |
+|---|---|---|---|---|
+| `round1_pending.output.json` | 无 | `pending` | `pending_confirmation` | `saved` |
+| `round2_granted.output.json` | `confirm.accept.json` | `granted` | `scheduled` | `deduplicated` |
+| `round2_rejected.output.json` | `confirm.reject.json` | `rejected` | `blocked` | `not_attempted`（旧草稿转 `withdrawn`） |
+
+复现（第二轮必须复用同一个 `--state`）：
+
+```bash
+python -m src.main --input examples/case4_slot_conflict.input.json --mode mock \
+  --state var/c.state.json --out examples/consent/round1_pending.output.json --trace none
+python -m src.main --input examples/case4_slot_conflict.input.json --mode mock \
+  --state var/c.state.json --confirm-file examples/confirm.accept.json \
+  --out examples/consent/round2_granted.output.json --trace none
+```
 
 每个 `.jsonl` 是与 `.md` 配套的原始事件流（一行一个事件，可直接 `jq` / Python 解析）。
 
@@ -44,9 +75,10 @@ case6  ── 需 SCHEDULER_FAULT=save，独立
 
 | 文件 | 说明 |
 |---|---|
-| `test-results.txt` | `pytest -v` 完整输出（76 passed） |
+| `test-results.txt` | `pytest -v` 完整输出（85 passed） |
 | `run-summary.live.json` | live 跑批的退出码、状态、耗时 |
 | `run-summary.mock.json` | 离线跑批的同上摘要 |
+| `confirm.accept.json` / `confirm.reject.json` | 人工答复样例，配合 `--confirm-file` 使用 |
 
 ## 关于 mock 的边界（请勿误读）
 

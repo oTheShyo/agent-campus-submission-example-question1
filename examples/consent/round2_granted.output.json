@@ -1,0 +1,84 @@
+{
+  "run_id": "case4-conflict",
+  "mode": "mock",
+  "model": "mock-deterministic",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T23:26:19+08:00",
+  "finished_at": "2026-10-29T23:26:19+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case4-conflict",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01",
+    "confirm_answers": [
+      {
+        "confirmation_id": "C001",
+        "answer": "accept",
+        "answered_by": "ops@xiaoying"
+      }
+    ]
+  },
+  "budget": {
+    "steps_used": 6,
+    "max_steps": 12,
+    "tool_calls_used": 6,
+    "max_tool_calls": 16,
+    "tokens": 0
+  },
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋冬粉底液实测｜干皮上脸 8 小时",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T18:00",
+      "suggested_slot": "2026-11-01 19:00",
+      "slot_changed": true,
+      "consent_status": "granted",
+      "effective_status": "scheduled",
+      "confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "18:00 已被占用，是否改到 19:00？",
+          "status": "accepted",
+          "issued_by": "agent",
+          "answer": "accept",
+          "answered_by": "ops@xiaoying",
+          "answered_at": "2026-10-29T23:26:19+08:00",
+          "answer_note": "同意从 18:00 改到 19:00，按这个排"
+        }
+      ],
+      "draft": {
+        "status": "deduplicated",
+        "draft_id": "D001",
+        "revision": 1,
+        "deduplicated": true,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [],
+      "decision": "schedule",
+      "decision_reason": "用户要求 18:00 已被占用，改用 19:00；该偏离已获人工批准（C001）",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 0,
+    "drafts_deduplicated": 1,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 0,
+    "pending_confirmations": 0,
+    "consent_granted": 1,
+    "consent_pending": 0,
+    "consent_rejected": 0,
+    "critical_flags": []
+  },
+  "trace_path": null
+}

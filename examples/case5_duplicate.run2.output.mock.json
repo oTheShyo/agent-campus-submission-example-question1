@@ -4,13 +4,14 @@
   "model": "mock-deterministic",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:33:21+08:00",
-  "finished_at": "2026-10-29T22:33:21+08:00",
+  "started_at": "2026-10-29T23:30:37+08:00",
+  "finished_at": "2026-10-29T23:30:37+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case1-normal",
     "operator": "内容运营-小林",
-    "focus_date": "2026-11-01"
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 6,
@@ -29,6 +30,9 @@
       "requested_slot": "2026-11-01T12:00",
       "suggested_slot": "2026-11-01 12:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "scheduled",
+      "confirmations": [],
       "draft": {
         "status": "deduplicated",
         "draft_id": "D001",
@@ -51,6 +55,9 @@
       "requested_slot": "2026-11-01T20:00",
       "suggested_slot": "2026-11-01 20:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "scheduled",
+      "confirmations": [],
       "draft": {
         "status": "deduplicated",
         "draft_id": "D002",
@@ -76,6 +83,9 @@
     "drafts_failed": 0,
     "drafts_not_attempted": 0,
     "pending_confirmations": 0,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\mock\\case5_duplicate.run2.jsonl"

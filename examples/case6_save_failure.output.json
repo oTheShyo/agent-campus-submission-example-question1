@@ -4,20 +4,21 @@
   "model": "qwen3.8-chat",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:28:38+08:00",
-  "finished_at": "2026-10-29T22:29:07+08:00",
+  "started_at": "2026-10-29T23:22:22+08:00",
+  "finished_at": "2026-10-29T23:22:55+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case6-save-failure",
     "operator": "内容运营-小林",
-    "focus_date": "2026-11-01"
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 5,
     "max_steps": 12,
     "tool_calls_used": 7,
     "max_tool_calls": 16,
-    "tokens": 17271
+    "tokens": 18092
   },
   "materials": [
     {
@@ -29,6 +30,9 @@
       "requested_slot": "2026-11-01T20:00",
       "suggested_slot": "2026-11-01 20:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "save_failed",
+      "confirmations": [],
       "draft": {
         "status": "failed",
         "draft_id": null,
@@ -40,15 +44,7 @@
       "pending_confirmations": [
         {
           "confirmation_id": null,
-          "question": "排期存储故障（SCHEDULER_FAULT=save），需运维/技术排查草稿存储可写性",
-          "reason": "模型提出的待确认项",
-          "status": "pending",
-          "options": [],
-          "source": "model"
-        },
-        {
-          "confirmation_id": null,
-          "question": "存储恢复后重新保存 M05 草稿：2026-11-01 20:00（该时段当前空闲，无需改期）",
+          "question": "排期服务/草稿存储当前不可写，需运维恢复后重新保存 M05 的 2026-11-01 20:00 草稿；本次未生成任何草稿，请勿当作已保存",
           "reason": "模型提出的待确认项",
           "status": "pending",
           "options": [],
@@ -70,7 +66,10 @@
     "drafts_deduplicated": 0,
     "drafts_failed": 1,
     "drafts_not_attempted": 0,
-    "pending_confirmations": 2,
+    "pending_confirmations": 1,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case6_save_failure.jsonl"

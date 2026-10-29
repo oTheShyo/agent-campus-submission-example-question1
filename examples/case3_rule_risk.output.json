@@ -4,20 +4,21 @@
   "model": "qwen3.8-chat",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:25:40+08:00",
-  "finished_at": "2026-10-29T22:26:30+08:00",
+  "started_at": "2026-10-29T23:25:06+08:00",
+  "finished_at": "2026-10-29T23:26:04+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case3-rule-risk",
     "operator": "内容运营-老周",
-    "focus_date": null
+    "focus_date": null,
+    "confirm_answers": []
   },
   "budget": {
-    "steps_used": 8,
+    "steps_used": 7,
     "max_steps": 12,
-    "tool_calls_used": 8,
+    "tool_calls_used": 7,
     "max_tool_calls": 16,
-    "tokens": 34408
+    "tokens": 30128
   },
   "materials": [
     {
@@ -42,6 +43,9 @@
       "requested_slot": "2026-11-02T16:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -53,15 +57,7 @@
       "pending_confirmations": [
         {
           "confirmation_id": null,
-          "question": "联系版权方/创作者旅拍Chen 续期或重新取得授权（当前 expires_on=2026-10-31）",
-          "reason": "模型提出的待确认项",
-          "status": "pending",
-          "options": [],
-          "source": "model"
-        },
-        {
-          "confirmation_id": null,
-          "question": "授权更新后重新走排期流程",
+          "question": "联系版权方/创作者续期授权至发布日之后，再重新提交排期",
           "reason": "模型提出的待确认项",
           "status": "pending",
           "options": [],
@@ -94,6 +90,20 @@
       "requested_slot": "2026-11-02T14:00",
       "suggested_slot": "2026-11-02 14:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "pending_confirmation",
+      "confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "M06 时长 245 秒超过 180 秒阈值，是否切条或转长视频池后再排期？",
+          "status": "pending",
+          "issued_by": "agent",
+          "answer": null,
+          "answered_by": null,
+          "answered_at": null,
+          "answer_note": null
+        }
+      ],
       "draft": {
         "status": "saved",
         "draft_id": "D001",
@@ -105,19 +115,19 @@
       "pending_confirmations": [
         {
           "confirmation_id": "C001",
-          "question": "M06《长视频｜国产手柄横评十款》时长 245 秒，超过 180 秒阈值（R3 warn）。是否接受按原要求 2026-11-02 14:00 排期？或需先切条/转长视频池？",
-          "reason": "R3 时长超标为 warn 级，可排期但需运营确认是否切条或转长视频池。",
+          "question": "M06 时长 245 秒超过 180 秒阈值，是否切条或转长视频池后再排期？",
+          "reason": "R3 规则 warn：时长 245 秒超过阈值 180 秒，需运营确认处理方式。",
           "status": "pending",
           "options": [
-            "按原要求 2026-11-02 14:00 排期",
-            "先切条后再排",
-            "转长视频池另行处理"
+            "切条后按短视频排期",
+            "转长视频池",
+            "维持原样排期"
           ],
           "source": "confirmation"
         }
       ],
       "decision": "pending_confirmation",
-      "decision_reason": "R3 warn：时长 245 秒超 180 秒阈值，可排但需运营确认。已按用户要求 11-02 14:00（该时段空闲）写入草稿 D001，并登记待确认项 C001。",
+      "decision_reason": "R3 warn：时长 245 秒超 180 秒阈值。已按用户要求时段 14:00（空闲）保存草稿 D001，待运营确认处理方式。",
       "consistency_flags": []
     },
     {
@@ -144,6 +154,9 @@
       "requested_slot": "2026-11-01T16:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -155,15 +168,7 @@
       "pending_confirmations": [
         {
           "confirmation_id": null,
-          "question": "创作者妈妈小满 改写文案，去除「最强」「绝对」等敏感词",
-          "reason": "模型提出的待确认项",
-          "status": "pending",
-          "options": [],
-          "source": "model"
-        },
-        {
-          "confirmation_id": null,
-          "question": "改写后重新提交审核复审，通过后再排期",
+          "question": "改写文案去除「最强」「绝对」等敏感词，复审通过后重新提交排期",
           "reason": "模型提出的待确认项",
           "status": "pending",
           "options": [],
@@ -185,8 +190,11 @@
     "drafts_deduplicated": 0,
     "drafts_failed": 0,
     "drafts_not_attempted": 2,
-    "pending_confirmations": 5,
+    "pending_confirmations": 3,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
-  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case3_rule_risk.jsonl"
+  "trace_path": "examples\\traces\\live\\case3_rule_risk.jsonl"
 }

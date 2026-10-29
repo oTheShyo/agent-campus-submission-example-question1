@@ -4,20 +4,21 @@
   "model": "qwen3.8-chat",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:28:01+08:00",
-  "finished_at": "2026-10-29T22:28:32+08:00",
+  "started_at": "2026-10-29T23:21:38+08:00",
+  "finished_at": "2026-10-29T23:22:16+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case1-normal",
     "operator": "内容运营-小林",
-    "focus_date": "2026-11-01"
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 6,
     "max_steps": 12,
     "tool_calls_used": 6,
     "max_tool_calls": 16,
-    "tokens": 21685
+    "tokens": 22748
   },
   "materials": [
     {
@@ -29,6 +30,9 @@
       "requested_slot": "2026-11-01T12:00",
       "suggested_slot": "2026-11-01 12:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "scheduled",
+      "confirmations": [],
       "draft": {
         "status": "deduplicated",
         "draft_id": "D001",
@@ -39,7 +43,7 @@
       },
       "pending_confirmations": [],
       "decision": "schedule",
-      "decision_reason": "字段齐全、无风险、无阻断；12:00 时段空闲且与用户要求一致，草稿 D001 已保存。",
+      "decision_reason": "字段齐全、无风险、12:00 空闲且与用户要求一致，草稿 D001 已保存。",
       "consistency_flags": []
     },
     {
@@ -51,6 +55,9 @@
       "requested_slot": "2026-11-01T20:00",
       "suggested_slot": "2026-11-01 20:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "scheduled",
+      "confirmations": [],
       "draft": {
         "status": "deduplicated",
         "draft_id": "D002",
@@ -61,7 +68,7 @@
       },
       "pending_confirmations": [],
       "decision": "schedule",
-      "decision_reason": "字段齐全、无风险、无阻断；20:00 时段空闲且与用户要求一致，草稿 D002 已保存。",
+      "decision_reason": "字段齐全、无风险、20:00 空闲且与用户要求一致，草稿 D002 已保存。",
       "consistency_flags": []
     }
   ],
@@ -76,6 +83,9 @@
     "drafts_failed": 0,
     "drafts_not_attempted": 0,
     "pending_confirmations": 0,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case5_duplicate.run2.jsonl"

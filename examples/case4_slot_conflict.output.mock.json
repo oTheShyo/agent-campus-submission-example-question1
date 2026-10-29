@@ -4,13 +4,14 @@
   "model": "mock-deterministic",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:33:20+08:00",
-  "finished_at": "2026-10-29T22:33:20+08:00",
+  "started_at": "2026-10-29T23:30:36+08:00",
+  "finished_at": "2026-10-29T23:30:36+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case4-conflict",
     "operator": "内容运营-小林",
-    "focus_date": "2026-11-01"
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 7,
@@ -29,6 +30,20 @@
       "requested_slot": "2026-11-01T18:00",
       "suggested_slot": "2026-11-01 19:00",
       "slot_changed": true,
+      "consent_status": "pending",
+      "effective_status": "pending_confirmation",
+      "confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "18:00 已被占用，是否改到 19:00？",
+          "status": "pending",
+          "issued_by": "agent",
+          "answer": null,
+          "answered_by": null,
+          "answered_at": null,
+          "answer_note": null
+        }
+      ],
       "draft": {
         "status": "saved",
         "draft_id": "D001",
@@ -67,6 +82,9 @@
     "drafts_failed": 0,
     "drafts_not_attempted": 0,
     "pending_confirmations": 1,
+    "consent_granted": 0,
+    "consent_pending": 1,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\mock\\case4_slot_conflict.jsonl"

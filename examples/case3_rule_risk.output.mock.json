@@ -4,13 +4,14 @@
   "model": "mock-deterministic",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:33:19+08:00",
-  "finished_at": "2026-10-29T22:33:19+08:00",
+  "started_at": "2026-10-29T23:30:35+08:00",
+  "finished_at": "2026-10-29T23:30:35+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case3-rule-risk",
     "operator": "内容运营-老周",
-    "focus_date": null
+    "focus_date": null,
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 8,
@@ -42,6 +43,9 @@
       "requested_slot": "2026-11-02T16:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -86,6 +90,20 @@
       "requested_slot": "2026-11-02T14:00",
       "suggested_slot": "2026-11-02 14:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "pending_confirmation",
+      "confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "该素材存在 1 条警告级风险，是否仍按 14:00 排期？",
+          "status": "pending",
+          "issued_by": "agent",
+          "answer": null,
+          "answered_by": null,
+          "answered_at": null,
+          "answer_note": null
+        }
+      ],
       "draft": {
         "status": "saved",
         "draft_id": "D001",
@@ -136,6 +154,9 @@
       "requested_slot": "2026-11-01T16:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -170,6 +191,9 @@
     "drafts_failed": 0,
     "drafts_not_attempted": 2,
     "pending_confirmations": 3,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\mock\\case3_rule_risk.jsonl"

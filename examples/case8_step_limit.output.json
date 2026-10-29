@@ -1,0 +1,71 @@
+{
+  "run_id": "case4-conflict",
+  "mode": "live",
+  "model": "qwen3.8-chat",
+  "status": "incomplete",
+  "stop_reason": "step_cap",
+  "started_at": "2026-10-29T23:16:28+08:00",
+  "finished_at": "2026-10-29T23:16:46+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case4-conflict",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01",
+    "confirm_answers": []
+  },
+  "budget": {
+    "steps_used": 3,
+    "max_steps": 3,
+    "tool_calls_used": 3,
+    "max_tool_calls": 16,
+    "tokens": 9123
+  },
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋冬粉底液实测｜干皮上脸 8 小时",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T18:00",
+      "suggested_slot": null,
+      "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "not_scheduled",
+      "confirmations": [],
+      "draft": {
+        "status": "not_attempted",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [],
+      "decision": null,
+      "decision_reason": null,
+      "consistency_flags": [
+        "MISSING_DECISION"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 0,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 1,
+    "pending_confirmations": 0,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
+    "critical_flags": [
+      "MISSING_DECISION"
+    ]
+  },
+  "trace_path": "examples\\traces\\live\\case8_step_limit.jsonl"
+}

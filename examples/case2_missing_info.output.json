@@ -4,20 +4,21 @@
   "model": "qwen3.8-chat",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T22:25:01+08:00",
-  "finished_at": "2026-10-29T22:25:35+08:00",
+  "started_at": "2026-10-29T23:18:02+08:00",
+  "finished_at": "2026-10-29T23:18:51+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case2-missing",
     "operator": "内容运营-小林",
-    "focus_date": null
+    "focus_date": null,
+    "confirm_answers": []
   },
   "budget": {
     "steps_used": 6,
     "max_steps": 12,
     "tool_calls_used": 7,
     "max_tool_calls": 16,
-    "tokens": 22845
+    "tokens": 23761
   },
   "materials": [
     {
@@ -55,6 +56,9 @@
       "requested_slot": "2026-11-01T11:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -66,15 +70,7 @@
       "pending_confirmations": [
         {
           "confirmation_id": null,
-          "question": "请内容运营-小林向素材提供方（剪辑阿哲/外部渠道）补齐：视频时长 duration_sec、授权类型 rights.license、授权到期日 rights.expires_on",
-          "reason": "模型提出的待确认项",
-          "status": "pending",
-          "options": [],
-          "source": "model"
-        },
-        {
-          "confirmation_id": null,
-          "question": "补齐后重新提交排期",
+          "question": "请小林向素材提供方（剪辑阿哲/外部渠道）补全 duration_sec、rights.license、rights.expires_on 后重新提交",
           "reason": "模型提出的待确认项",
           "status": "pending",
           "options": [],
@@ -82,7 +78,7 @@
         }
       ],
       "decision": "block",
-      "decision_reason": "外部渠道素材，必需字段 duration_sec、rights.license、rights.expires_on 均缺失，外部素材库无记录无法补查，信息不足不得排期。",
+      "decision_reason": "外部渠道素材，duration_sec、rights.license、rights.expires_on 三个必需字段缺失，外部素材库补查无记录，无法确认版权与时长，阻断不排期。",
       "consistency_flags": []
     },
     {
@@ -94,6 +90,9 @@
       "requested_slot": "2026-11-02T12:00",
       "suggested_slot": "2026-11-02 12:00",
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "scheduled",
+      "confirmations": [],
       "draft": {
         "status": "saved",
         "draft_id": "D001",
@@ -104,7 +103,7 @@
       },
       "pending_confirmations": [],
       "decision": "schedule",
-      "decision_reason": "字段齐全、无风险，用户要求的 2026-11-02 12:00 时段空闲，草稿已保存（D001）。",
+      "decision_reason": "字段齐全、无风险，用户要求的 2026-11-02 12:00 时段空闲，草稿 D001 已保存（未发布）。",
       "consistency_flags": []
     },
     {
@@ -128,6 +127,9 @@
       "requested_slot": "2026-11-01T09:00",
       "suggested_slot": null,
       "slot_changed": false,
+      "consent_status": "not_required",
+      "effective_status": "blocked",
+      "confirmations": [],
       "draft": {
         "status": "not_attempted",
         "draft_id": null,
@@ -147,7 +149,7 @@
         }
       ],
       "decision": "no_action",
-      "decision_reason": "素材已在排期中（status=scheduled，already_scheduled=true），用户要求核对，确认无需重复操作。",
+      "decision_reason": "M09 状态为 scheduled，already_scheduled=true，已在排期中，本次无需操作，未写草稿。",
       "consistency_flags": []
     }
   ],
@@ -161,7 +163,10 @@
     "drafts_deduplicated": 0,
     "drafts_failed": 0,
     "drafts_not_attempted": 2,
-    "pending_confirmations": 3,
+    "pending_confirmations": 2,
+    "consent_granted": 0,
+    "consent_pending": 0,
+    "consent_rejected": 0,
     "critical_flags": []
   },
   "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case2_missing_info.jsonl"
