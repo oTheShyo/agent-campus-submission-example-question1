@@ -1,0 +1,75 @@
+{
+  "_comment": "审核规则数据化：新增同类规则只需改本文件，不改代码。severity=block 表示不允许自动排期（只能阻断或转人工确认）。",
+  "required_fields": [
+    "material_id",
+    "title",
+    "duration_sec",
+    "requested_publish_at",
+    "rights.license",
+    "rights.expires_on",
+    "content.text"
+  ],
+  "optional_fields": ["content.sponsor"],
+  "sensitive_words": ["最强", "第一", "国家级", "绝对", "100%", "永久"],
+  "slot_grid": ["09:00", "10:00", "11:00", "12:00", "14:00", "16:00", "18:00", "19:00", "20:00", "21:00"],
+  "rules": [
+    {
+      "id": "R1",
+      "name": "版权来源不明",
+      "type": "license_unknown",
+      "severity": "block",
+      "description": "rights.license 为空或 unknown 时不得自动排期，需版权方确认。"
+    },
+    {
+      "id": "R2",
+      "name": "授权到期日早于发布日",
+      "type": "license_expired",
+      "severity": "block",
+      "description": "rights.expires_on 早于拟发布日，授权已失效。"
+    },
+    {
+      "id": "R3",
+      "name": "时长超过 180 秒",
+      "type": "duration_exceeded",
+      "severity": "warn",
+      "limit_sec": 180,
+      "description": "超过短视频时长阈值，建议切条或转长视频池，需运营确认。"
+    },
+    {
+      "id": "R4",
+      "name": "同创作者同日超过 2 条",
+      "type": "creator_daily_cap",
+      "severity": "warn",
+      "limit": 2,
+      "description": "同一创作者同一天发布超过 2 条会互抢流量。"
+    },
+    {
+      "id": "R5",
+      "name": "竞品同日竞排",
+      "type": "brand_conflict",
+      "severity": "block",
+      "description": "同一发布日内出现同一赞助商的竞品品牌，需品牌方确认。"
+    },
+    {
+      "id": "R6",
+      "name": "敏感词命中",
+      "type": "sensitive_word",
+      "severity": "block",
+      "description": "标题或简介命中广告法敏感词，须改写文案。"
+    },
+    {
+      "id": "R7",
+      "name": "必需字段缺失",
+      "type": "required_fields",
+      "severity": "block",
+      "description": "必需字段缺失时无法判断合规性，须补件。"
+    },
+    {
+      "id": "R8",
+      "name": "素材已在排期中",
+      "type": "already_scheduled",
+      "severity": "block",
+      "description": "该素材已存在于排期，不得自动重复排期；如需改期须运营确认。"
+    }
+  ]
+}

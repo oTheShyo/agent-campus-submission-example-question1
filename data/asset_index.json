@@ -1,0 +1,12 @@
+{
+  "_comment": "补查用的『外部素材库索引』，模拟另一套系统。M02 故意查不到，用于验证模型在补查失败后选择阻断而不是硬排。",
+  "M01": {
+    "fields": { "rights.license": "owned", "rights.expires_on": "2027-06-30" }
+  },
+  "M07": {
+    "fields": { "content.sponsor": "自有品牌（非商业合作）" }
+  },
+  "M08": {
+    "fields": { "rights.license": "owned" }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "_comment": "合成素材库，非真实业务数据。requested_publish_at 是用户的发布时间要求，hard_requirement=true 表示硬性要求，任何工具都不得修改。",
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋冬粉底液实测｜干皮上脸 8 小时",
+      "creator": "小鹿测评",
+      "status": "pending",
+      "duration_sec": 47,
+      "requested_publish_at": "2026-11-01T18:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2027-06-30", "regions": ["CN"] },
+      "content": {
+        "tags": ["美妆", "测评"],
+        "text": "本期实测秋冬粉底液，干皮友好，8 小时持妆记录。",
+        "sponsor": "花西子",
+        "sponsor_competitors": ["完美日记"],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M02",
+      "title": "新手剪辑教程｜三分钟做出卡点视频",
+      "creator": "剪辑阿哲",
+      "status": "pending",
+      "requested_publish_at": "2026-11-01T11:00",
+      "hard_requirement": true,
+      "rights": { "license": null, "expires_on": null, "regions": ["CN"] },
+      "content": {
+        "tags": ["教程", "剪辑"],
+        "text": "面向新手的卡点剪辑教学，节奏清晰。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M03",
+      "title": "猫咪换粮实录｜七天过渡观察",
+      "creator": "橘猫日记",
+      "status": "pending",
+      "duration_sec": 58,
+      "requested_publish_at": "2026-11-01T12:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2028-01-31", "regions": ["CN"] },
+      "content": {
+        "tags": ["宠物", "vlog"],
+        "text": "记录猫咪七天换粮过程，含每日状态观察。",
+        "sponsor": "喵鲜生",
+        "sponsor_competitors": ["网易严选"],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M04",
+      "title": "夏日泳池旅拍｜巴厘岛分镜合集",
+      "creator": "旅拍Chen",
+      "status": "pending",
+      "duration_sec": 72,
+      "requested_publish_at": "2026-11-02T16:00",
+      "hard_requirement": true,
+      "rights": { "license": "licensed", "expires_on": "2026-10-31", "regions": ["CN"] },
+      "content": {
+        "tags": ["旅行", "旅拍"],
+        "text": "巴厘岛泳池旅拍分镜合集，含无人机航拍。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M05",
+      "title": "办公桌面改造｜三百元预算版",
+      "creator": "桌面研究所",
+      "status": "pending",
+      "duration_sec": 96,
+      "requested_publish_at": "2026-11-01T20:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2027-12-31", "regions": ["CN"] },
+      "content": {
+        "tags": ["数码", "改造"],
+        "text": "三百元预算的办公桌面改造方案，附购物清单。",
+        "sponsor": "绿联",
+        "sponsor_competitors": ["倍思"],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M06",
+      "title": "长视频｜国产手柄横评十款",
+      "creator": "手柄老张",
+      "status": "pending",
+      "duration_sec": 245,
+      "requested_publish_at": "2026-11-02T14:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2027-09-30", "regions": ["CN"] },
+      "content": {
+        "tags": ["数码", "横评"],
+        "text": "十款国产手柄横评，含延迟与手感对比。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M07",
+      "title": "秋冬通勤穿搭｜一周不重样",
+      "creator": "搭配师Lin",
+      "status": "pending",
+      "duration_sec": 64,
+      "requested_publish_at": "2026-11-02T12:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2027-03-31", "regions": ["CN"] },
+      "content": {
+        "tags": ["穿搭", "通勤"],
+        "text": "五套秋冬通勤搭配，覆盖不同温度场景。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M08",
+      "title": "母婴好物｜辅食用具红黑榜",
+      "creator": "妈妈小满",
+      "status": "pending",
+      "duration_sec": 88,
+      "requested_publish_at": "2026-11-01T16:00",
+      "hard_requirement": true,
+      "rights": { "license": "owned", "expires_on": "2027-05-31", "regions": ["CN"] },
+      "content": {
+        "tags": ["母婴", "好物"],
+        "text": "全网最强的辅食用具红黑榜，绝对不踩坑。",
+        "sponsor": "贝亲",
+        "sponsor_competitors": ["好孩子"],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M09",
+      "title": "早间快讯｜行业动态三分钟",
+      "creator": "资讯组",
+      "status": "scheduled",
+      "duration_sec": 180,
+      "requested_publish_at": "2026-11-01T09:00",
+      "hard_requirement": false,
+      "rights": { "license": "owned", "expires_on": "2028-06-30", "regions": ["CN"] },
+      "content": {
+        "tags": ["资讯"],
+        "text": "行业动态三分钟快讯。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M10",
+      "title": "晚间娱乐｜电影解说合辑",
+      "creator": "影视组",
+      "status": "scheduled",
+      "duration_sec": 300,
+      "requested_publish_at": "2026-11-01T18:00",
+      "hard_requirement": false,
+      "rights": { "license": "licensed", "expires_on": "2028-02-28", "regions": ["CN"] },
+      "content": {
+        "tags": ["影视"],
+        "text": "本周电影解说合辑。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    },
+    {
+      "material_id": "M11",
+      "title": "深夜电台｜听众来信",
+      "creator": "电台组",
+      "status": "scheduled",
+      "duration_sec": 600,
+      "requested_publish_at": "2026-11-01T21:00",
+      "hard_requirement": false,
+      "rights": { "license": "owned", "expires_on": "2028-06-30", "regions": ["CN"] },
+      "content": {
+        "tags": ["电台"],
+        "text": "听众来信选读。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "audio"
+      }
+    },
+    {
+      "material_id": "M12",
+      "title": "下午档｜开箱合辑",
+      "creator": "开箱组",
+      "status": "scheduled",
+      "duration_sec": 210,
+      "requested_publish_at": "2026-11-02T16:00",
+      "hard_requirement": false,
+      "rights": { "license": "owned", "expires_on": "2028-04-30", "regions": ["CN"] },
+      "content": {
+        "tags": ["开箱"],
+        "text": "本周开箱合辑。",
+        "sponsor": null,
+        "sponsor_competitors": [],
+        "format": "video"
+      }
+    }
+  ]
+}

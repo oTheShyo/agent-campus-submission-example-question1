@@ -1,0 +1,9 @@
+{
+  "_comment": "基线排期（只读）。drafts 由运行期产生，存在 --state 指定的文件里；两者合并后才算真实占用。",
+  "entries": [
+    { "date": "2026-11-01", "time": "09:00", "material_id": "M09", "source": "baseline" },
+    { "date": "2026-11-01", "time": "18:00", "material_id": "M10", "source": "baseline" },
+    { "date": "2026-11-01", "time": "21:00", "material_id": "M11", "source": "baseline" },
+    { "date": "2026-11-02", "time": "16:00", "material_id": "M12", "source": "baseline" }
+  ]
+}

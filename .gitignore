@@ -1,0 +1,16 @@
+# 环境与密钥
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 运行时状态（每个用例独立的草稿库）
+var/
+
+# 考核题目原件（不属于交付物）
+题目.md
