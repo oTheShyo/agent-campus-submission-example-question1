@@ -1,0 +1,66 @@
+[
+  {
+    "name": "case1_normal",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case1_normal.output.mock.json",
+    "trace": "examples\\traces\\mock\\case1_normal.jsonl"
+  },
+  {
+    "name": "case2_missing_info",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case2_missing_info.output.mock.json",
+    "trace": "examples\\traces\\mock\\case2_missing_info.jsonl"
+  },
+  {
+    "name": "case3_rule_risk",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case3_rule_risk.output.mock.json",
+    "trace": "examples\\traces\\mock\\case3_rule_risk.jsonl"
+  },
+  {
+    "name": "case4_slot_conflict",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case4_slot_conflict.output.mock.json",
+    "trace": "examples\\traces\\mock\\case4_slot_conflict.jsonl"
+  },
+  {
+    "name": "case5_duplicate.run1",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case5_duplicate.run1.output.mock.json",
+    "trace": "examples\\traces\\mock\\case5_duplicate.run1.jsonl"
+  },
+  {
+    "name": "case5_duplicate.run2",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case5_duplicate.run2.output.mock.json",
+    "trace": "examples\\traces\\mock\\case5_duplicate.run2.jsonl"
+  },
+  {
+    "name": "case6_save_failure",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case6_save_failure.output.mock.json",
+    "trace": "examples\\traces\\mock\\case6_save_failure.jsonl"
+  },
+  {
+    "name": "case7_rerun_conflict",
+    "exit": 0,
+    "status": "completed",
+    "elapsed": 0.5,
+    "output": "examples\\case7_rerun_conflict.output.mock.json",
+    "trace": "examples\\traces\\mock\\case7_rerun_conflict.jsonl"
+  }
+]

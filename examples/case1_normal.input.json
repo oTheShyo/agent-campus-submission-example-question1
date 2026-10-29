@@ -1,0 +1,8 @@
+{
+  "request_id": "case1-normal",
+  "operator": "内容运营-小林",
+  "focus_date": "2026-11-01",
+  "materials": ["M03", "M05"],
+  "hard_note": "两条都是常规内容，按各自要求的时间排，没有额外限制。",
+  "_note": "覆盖验收点：正常排期"
+}

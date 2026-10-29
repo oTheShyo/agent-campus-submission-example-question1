@@ -1,0 +1,77 @@
+{
+  "run_id": "case6-save-failure",
+  "mode": "live",
+  "model": "qwen3.8-chat",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T22:28:38+08:00",
+  "finished_at": "2026-10-29T22:29:07+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case6-save-failure",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01"
+  },
+  "budget": {
+    "steps_used": 5,
+    "max_steps": 12,
+    "tool_calls_used": 7,
+    "max_tool_calls": 16,
+    "tokens": 17271
+  },
+  "materials": [
+    {
+      "material_id": "M05",
+      "title": "办公桌面改造｜三百元预算版",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T20:00",
+      "suggested_slot": "2026-11-01 20:00",
+      "slot_changed": false,
+      "draft": {
+        "status": "failed",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": "STORE_WRITE_FAILED",
+        "message": "草稿保存失败：草稿存储不可写（SCHEDULER_FAULT=save 注入）"
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": null,
+          "question": "排期存储故障（SCHEDULER_FAULT=save），需运维/技术排查草稿存储可写性",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        },
+        {
+          "confirmation_id": null,
+          "question": "存储恢复后重新保存 M05 草稿：2026-11-01 20:00（该时段当前空闲，无需改期）",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        }
+      ],
+      "decision": "save_failed",
+      "decision_reason": "字段齐全、无风险（blocking=false，无 warn），用户要求的 2026-11-01 20:00 时段空闲，本应直接排期。但 save_schedule_draft 两次均返回 STORE_WRITE_FAILED（草稿存储不可写），重试一次仍失败，草稿未保存成功。",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 0,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 1,
+    "drafts_not_attempted": 0,
+    "pending_confirmations": 2,
+    "critical_flags": []
+  },
+  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case6_save_failure.jsonl"
+}

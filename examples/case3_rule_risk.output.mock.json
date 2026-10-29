@@ -1,0 +1,176 @@
+{
+  "run_id": "case3-rule-risk",
+  "mode": "mock",
+  "model": "mock-deterministic",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T22:30:52+08:00",
+  "finished_at": "2026-10-29T22:30:52+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case3-rule-risk",
+    "operator": "内容运营-老周",
+    "focus_date": null
+  },
+  "budget": {
+    "steps_used": 8,
+    "max_steps": 12,
+    "tool_calls_used": 8,
+    "max_tool_calls": 16,
+    "tokens": 0
+  },
+  "materials": [
+    {
+      "material_id": "M04",
+      "title": "夏日泳池旅拍｜巴厘岛分镜合集",
+      "review_status": "blocked",
+      "risk_reasons": [
+        "[R2] 授权到期日 2026-10-31 早于拟发布日 2026-11-02，授权已失效。"
+      ],
+      "risks": [
+        {
+          "rule_id": "R2",
+          "name": "授权到期日早于发布日",
+          "severity": "block",
+          "reason": "授权到期日 2026-10-31 早于拟发布日 2026-11-02，授权已失效。",
+          "evidence": {
+            "expires_on": "2026-10-31",
+            "planned_date": "2026-11-02"
+          }
+        }
+      ],
+      "requested_slot": "2026-11-02T16:00",
+      "suggested_slot": null,
+      "slot_changed": false,
+      "draft": {
+        "status": "not_attempted",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": null,
+          "question": "[R2] 授权到期日早于发布日：需人工复审或修改后重排",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        }
+      ],
+      "decision": "block",
+      "decision_reason": "存在阻断级风险 R2，不予排期：授权到期日 2026-10-31 早于拟发布日 2026-11-02，授权已失效。",
+      "consistency_flags": []
+    },
+    {
+      "material_id": "M06",
+      "title": "长视频｜国产手柄横评十款",
+      "review_status": "risk",
+      "risk_reasons": [
+        "[R3] 素材时长 245 秒超过阈值 180 秒，需运营确认是否切条或转长视频池。"
+      ],
+      "risks": [
+        {
+          "rule_id": "R3",
+          "name": "时长超过 180 秒",
+          "severity": "warn",
+          "reason": "素材时长 245 秒超过阈值 180 秒，需运营确认是否切条或转长视频池。",
+          "evidence": {
+            "duration_sec": 245,
+            "limit_sec": 180
+          }
+        }
+      ],
+      "requested_slot": "2026-11-02T14:00",
+      "suggested_slot": "2026-11-02 14:00",
+      "slot_changed": false,
+      "draft": {
+        "status": "saved",
+        "draft_id": "D001",
+        "revision": 1,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": "C001",
+          "question": "该素材存在 1 条警告级风险，是否仍按 14:00 排期？",
+          "reason": "素材时长 245 秒超过阈值 180 秒，需运营确认是否切条或转长视频池。",
+          "status": "pending",
+          "options": [
+            "14:00",
+            "改天",
+            "取消"
+          ],
+          "source": "confirmation"
+        }
+      ],
+      "decision": "pending_confirmation",
+      "decision_reason": "存在警告级风险，已登记待确认后写入 14:00 草稿",
+      "consistency_flags": []
+    },
+    {
+      "material_id": "M08",
+      "title": "母婴好物｜辅食用具红黑榜",
+      "review_status": "blocked",
+      "risk_reasons": [
+        "[R6] 文案命中广告法敏感词：最强、绝对，须改写后复审。"
+      ],
+      "risks": [
+        {
+          "rule_id": "R6",
+          "name": "敏感词命中",
+          "severity": "block",
+          "reason": "文案命中广告法敏感词：最强、绝对，须改写后复审。",
+          "evidence": {
+            "hits": [
+              "最强",
+              "绝对"
+            ]
+          }
+        }
+      ],
+      "requested_slot": "2026-11-01T16:00",
+      "suggested_slot": null,
+      "slot_changed": false,
+      "draft": {
+        "status": "not_attempted",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": null,
+          "question": "[R6] 敏感词命中：需人工复审或修改后重排",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        }
+      ],
+      "decision": "block",
+      "decision_reason": "存在阻断级风险 R6，不予排期：文案命中广告法敏感词：最强、绝对，须改写后复审。",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "ready": 0,
+    "risk": 1,
+    "missing_info": 0,
+    "blocked": 2,
+    "drafts_saved": 1,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 2,
+    "pending_confirmations": 3,
+    "critical_flags": []
+  },
+  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\mock\\case3_rule_risk.jsonl"
+}

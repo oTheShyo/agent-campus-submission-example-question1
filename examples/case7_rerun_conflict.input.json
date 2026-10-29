@@ -1,0 +1,11 @@
+{
+  "request_id": "case7-rerun",
+  "operator": "内容运营-小林",
+  "focus_date": "2026-11-01",
+  "materials": ["M01"],
+  "extra_schedule": [
+    { "date": "2026-11-01", "time": "19:00", "material_id": "M03" }
+  ],
+  "hard_note": "19:00 临时被 M03 占了，M01 还是客户指定 18:00，帮我重新看下还能排哪里。",
+  "_note": "覆盖审核要点「更换占用时段并重复提交」：把原来的替代时段也占掉后再提交同一素材，期望产生新 revision 并 supersede 旧草稿。需在 case4 之后、对同一 --state 运行。"
+}

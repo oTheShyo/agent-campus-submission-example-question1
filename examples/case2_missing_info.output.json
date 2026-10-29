@@ -1,0 +1,168 @@
+{
+  "run_id": "case2-missing",
+  "mode": "live",
+  "model": "qwen3.8-chat",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T22:25:01+08:00",
+  "finished_at": "2026-10-29T22:25:35+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case2-missing",
+    "operator": "内容运营-小林",
+    "focus_date": null
+  },
+  "budget": {
+    "steps_used": 6,
+    "max_steps": 12,
+    "tool_calls_used": 7,
+    "max_tool_calls": 16,
+    "tokens": 22845
+  },
+  "materials": [
+    {
+      "material_id": "M02",
+      "title": "新手剪辑教程｜三分钟做出卡点视频",
+      "review_status": "missing_info",
+      "risk_reasons": [
+        "[R1] 版权来源为空或 unknown，无法确认可商用授权。",
+        "[R7] 必需字段缺失：duration_sec、rights.license、rights.expires_on。"
+      ],
+      "risks": [
+        {
+          "rule_id": "R1",
+          "name": "版权来源不明",
+          "severity": "block",
+          "reason": "版权来源为空或 unknown，无法确认可商用授权。",
+          "evidence": {
+            "rights.license": null
+          }
+        },
+        {
+          "rule_id": "R7",
+          "name": "必需字段缺失",
+          "severity": "block",
+          "reason": "必需字段缺失：duration_sec、rights.license、rights.expires_on。",
+          "evidence": {
+            "missing": [
+              "duration_sec",
+              "rights.license",
+              "rights.expires_on"
+            ]
+          }
+        }
+      ],
+      "requested_slot": "2026-11-01T11:00",
+      "suggested_slot": null,
+      "slot_changed": false,
+      "draft": {
+        "status": "not_attempted",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": null,
+          "question": "请内容运营-小林向素材提供方（剪辑阿哲/外部渠道）补齐：视频时长 duration_sec、授权类型 rights.license、授权到期日 rights.expires_on",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        },
+        {
+          "confirmation_id": null,
+          "question": "补齐后重新提交排期",
+          "reason": "模型提出的待确认项",
+          "status": "pending",
+          "options": [],
+          "source": "model"
+        }
+      ],
+      "decision": "block",
+      "decision_reason": "外部渠道素材，必需字段 duration_sec、rights.license、rights.expires_on 均缺失，外部素材库无记录无法补查，信息不足不得排期。",
+      "consistency_flags": []
+    },
+    {
+      "material_id": "M07",
+      "title": "秋冬通勤穿搭｜一周不重样",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-02T12:00",
+      "suggested_slot": "2026-11-02 12:00",
+      "slot_changed": false,
+      "draft": {
+        "status": "saved",
+        "draft_id": "D001",
+        "revision": 1,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [],
+      "decision": "schedule",
+      "decision_reason": "字段齐全、无风险，用户要求的 2026-11-02 12:00 时段空闲，草稿已保存（D001）。",
+      "consistency_flags": []
+    },
+    {
+      "material_id": "M09",
+      "title": "早间快讯｜行业动态三分钟",
+      "review_status": "blocked",
+      "risk_reasons": [
+        "[R8] 该素材已在排期中（2026-11-01 09:00），不得自动重复排期，改期需运营确认。"
+      ],
+      "risks": [
+        {
+          "rule_id": "R8",
+          "name": "素材已在排期中",
+          "severity": "block",
+          "reason": "该素材已在排期中（2026-11-01 09:00），不得自动重复排期，改期需运营确认。",
+          "evidence": {
+            "scheduled_at": "2026-11-01 09:00"
+          }
+        }
+      ],
+      "requested_slot": "2026-11-01T09:00",
+      "suggested_slot": null,
+      "slot_changed": false,
+      "draft": {
+        "status": "not_attempted",
+        "draft_id": null,
+        "revision": null,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": null,
+          "question": "需人工复审：[R8] 素材已在排期中",
+          "reason": "存在阻断级风险，须人工处置后才能重排",
+          "status": "pending",
+          "options": [],
+          "source": "derived_from_rules"
+        }
+      ],
+      "decision": "no_action",
+      "decision_reason": "素材已在排期中（status=scheduled，already_scheduled=true），用户要求核对，确认无需重复操作。",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 1,
+    "blocked": 1,
+    "drafts_saved": 1,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 2,
+    "pending_confirmations": 3,
+    "critical_flags": []
+  },
+  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case2_missing_info.jsonl"
+}

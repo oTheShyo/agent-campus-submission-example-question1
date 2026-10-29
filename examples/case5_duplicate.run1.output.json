@@ -1,0 +1,82 @@
+{
+  "run_id": "case1-normal",
+  "mode": "live",
+  "model": "qwen3.8-chat",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T22:27:22+08:00",
+  "finished_at": "2026-10-29T22:27:56+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case1-normal",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01"
+  },
+  "budget": {
+    "steps_used": 6,
+    "max_steps": 12,
+    "tool_calls_used": 6,
+    "max_tool_calls": 16,
+    "tokens": 21682
+  },
+  "materials": [
+    {
+      "material_id": "M03",
+      "title": "猫咪换粮实录｜七天过渡观察",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T12:00",
+      "suggested_slot": "2026-11-01 12:00",
+      "slot_changed": false,
+      "draft": {
+        "status": "saved",
+        "draft_id": "D001",
+        "revision": 1,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [],
+      "decision": "schedule",
+      "decision_reason": "字段齐全、无风险、无阻断；12:00 空闲且与用户要求一致，草稿 D001 已保存。",
+      "consistency_flags": []
+    },
+    {
+      "material_id": "M05",
+      "title": "办公桌面改造｜三百元预算版",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T20:00",
+      "suggested_slot": "2026-11-01 20:00",
+      "slot_changed": false,
+      "draft": {
+        "status": "saved",
+        "draft_id": "D002",
+        "revision": 1,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [],
+      "decision": "schedule",
+      "decision_reason": "字段齐全、无风险、无阻断；20:00 空闲且与用户要求一致，草稿 D002 已保存。",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "ready": 2,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 2,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 0,
+    "pending_confirmations": 0,
+    "critical_flags": []
+  },
+  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case5_duplicate.run1.jsonl"
+}

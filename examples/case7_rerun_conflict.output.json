@@ -1,0 +1,73 @@
+{
+  "run_id": "case7-rerun",
+  "mode": "live",
+  "model": "qwen3.8-chat",
+  "status": "completed",
+  "stop_reason": "finalized",
+  "started_at": "2026-10-29T22:29:13+08:00",
+  "finished_at": "2026-10-29T22:30:06+08:00",
+  "publish_state": "draft_only",
+  "batch": {
+    "request_id": "case7-rerun",
+    "operator": "内容运营-小林",
+    "focus_date": "2026-11-01"
+  },
+  "budget": {
+    "steps_used": 8,
+    "max_steps": 12,
+    "tool_calls_used": 8,
+    "max_tool_calls": 16,
+    "tokens": 29946
+  },
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋冬粉底液实测｜干皮上脸 8 小时",
+      "review_status": "ready",
+      "risk_reasons": [],
+      "risks": [],
+      "requested_slot": "2026-11-01T18:00",
+      "suggested_slot": "2026-11-01 20:00",
+      "slot_changed": true,
+      "draft": {
+        "status": "saved",
+        "draft_id": "D002",
+        "revision": 2,
+        "deduplicated": false,
+        "error_code": null,
+        "message": null
+      },
+      "pending_confirmations": [
+        {
+          "confirmation_id": "C002",
+          "question": "客户指定 18:00 已被 M10 占用，19:00 也被 M03 占用，18:00 之后当天唯一空闲时段是 20:00，是否同意 M01 改到 2026-11-01 20:00 发布？",
+          "reason": "用户硬性要求 18:00，但该时段已被 M10 占用（19:00 也被 M03 占用），无法按原要求排期，需运营确认改期到最接近的空闲时段 20:00。",
+          "status": "pending",
+          "options": [
+            "同意改到 2026-11-01 20:00",
+            "改到其他日期/时段",
+            "维持 18:00 等 M10 让位"
+          ],
+          "source": "confirmation"
+        }
+      ],
+      "decision": "pending_confirmation",
+      "decision_reason": "字段齐全、无风险、无阻断。客户指定 18:00 已被 M10 占用，19:00 也被 M03 占用，18:00 之后当天唯一空闲为 20:00。已登记待确认项 C002 并写入草稿 D002（20:00），用户原要求 18:00 保持不变。",
+      "consistency_flags": []
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "ready": 1,
+    "risk": 0,
+    "missing_info": 0,
+    "blocked": 0,
+    "drafts_saved": 1,
+    "drafts_deduplicated": 0,
+    "drafts_failed": 0,
+    "drafts_not_attempted": 0,
+    "pending_confirmations": 1,
+    "critical_flags": []
+  },
+  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case7_rerun_conflict.jsonl"
+}

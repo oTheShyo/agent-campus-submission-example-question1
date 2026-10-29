@@ -1,0 +1,8 @@
+{
+  "request_id": "case1-normal",
+  "operator": "内容运营-小林",
+  "focus_date": "2026-11-01",
+  "materials": ["M03", "M05"],
+  "hard_note": "两条都是常规内容，按各自要求的时间排，没有额外限制。",
+  "_note": "覆盖验收点：重复提交。内容与 case1 完全一致（同一 request_id、同一批次），用于验证「相同请求重复保存只产生一份草稿」。运行方式见 README：对同一 --state 连续执行本文件与 case1。"
+}

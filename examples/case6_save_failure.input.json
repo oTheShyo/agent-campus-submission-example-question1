@@ -1,0 +1,8 @@
+{
+  "request_id": "case6-save-failure",
+  "operator": "内容运营-小林",
+  "focus_date": "2026-11-01",
+  "materials": ["M05"],
+  "hard_note": "排期服务这会儿不太稳定，如果草稿存不上，直接说存不上，别当成存好了。",
+  "_note": "覆盖验收点：保存失败。运行前设置 SCHEDULER_FAULT=save 注入写盘失败。"
+}
