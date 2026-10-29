@@ -7,7 +7,7 @@
 
 - 题目：项目题 1「素材审核与发布排期 Agent」
 - 技术栈：Python 3.11+ / `openai` SDK（OpenAI 兼容端点）/ pytest，ReAct 循环自己实现，未使用 Agent 框架
-- 最终 commit：`<!-- COMMIT_SHA -->`（push 后回填）
+- 最终 commit：`<!-- COMMIT_SHA -->`（提交时用 `git rev-parse HEAD` 回填）
 
 ---
 
