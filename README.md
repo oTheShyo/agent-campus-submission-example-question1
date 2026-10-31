@@ -7,8 +7,8 @@
 
 - 题目：项目题 1「素材审核与发布排期 Agent」
 - 技术栈：Python 3.11+ / `openai` SDK（OpenAI 兼容端点）/ pytest，ReAct 循环自己实现，未使用 Agent 框架
-- 仓库：<https://github.com/oTheShyo/xiaoyingkejiquestion1>
-- 代码交付 commit：[`3993d62`](https://github.com/oTheShyo/xiaoyingkejiquestion1/commit/3993d62bf28b9aad6b56eee5556157e00fd2389e)（本次仅回填本行，未改代码）
+- 仓库：<https://github.com/oTheShyo/agent-campus-submission-example-question1>
+- 代码交付 commit：[`b8fc387`](https://github.com/oTheShyo/agent-campus-submission-example-question1/commit/b8fc3879708b8c5d1da1250883e84c5ee4365977)（本行所在提交仅回填，未改代码）
 
 ---
 
