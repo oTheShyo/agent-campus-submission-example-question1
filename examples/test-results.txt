@@ -1,7 +1,8 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.13.14, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\HP\.workbuddy\binaries\python\versions\3.13.12\python.exe
-rootdir: C:\Users\HP\Desktop\小影科技-题目1
-plugins: anyio-4.15.1
+platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\HP\AppData\Local\Programs\Python\Python311\python.exe
+rootdir: .
+plugins: anyio-4.13.0, langsmith-0.10.16, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
 collecting ... collected 85 items
 
 tests/test_agent_loop.py::test_normal_two_materials PASSED               [  1%]
@@ -90,4 +91,4 @@ tests/test_tools.py::test_malformed_finalize_decisions_return_error_not_crash PA
 tests/test_tools.py::test_finalize_accepts_json_encoded_string PASSED    [ 98%]
 tests/test_tools.py::test_save_with_bad_item_shape_is_rejected PASSED    [100%]
 
-============================= 85 passed in 2.01s ==============================
+============================= 85 passed in 0.39s ==============================

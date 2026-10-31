@@ -4,8 +4,8 @@
   "model": "mock-deterministic",
   "status": "completed",
   "stop_reason": "finalized",
-  "started_at": "2026-10-29T23:30:37+08:00",
-  "finished_at": "2026-10-29T23:30:37+08:00",
+  "started_at": "2026-10-31T22:01:07+08:00",
+  "finished_at": "2026-10-31T22:01:07+08:00",
   "publish_state": "draft_only",
   "batch": {
     "request_id": "case1-normal",
@@ -88,5 +88,5 @@
     "consent_rejected": 0,
     "critical_flags": []
   },
-  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\mock\\case5_duplicate.run1.jsonl"
+  "trace_path": "examples\\traces\\mock\\case5_duplicate.run1.jsonl"
 }

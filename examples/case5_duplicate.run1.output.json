@@ -88,5 +88,5 @@
     "consent_rejected": 0,
     "critical_flags": []
   },
-  "trace_path": "C:\\Users\\HP\\Desktop\\小影科技-题目1\\examples\\traces\\live\\case5_duplicate.run1.jsonl"
+  "trace_path": "/examples/traces/live/case5_duplicate.run1.jsonl"
 }

@@ -38,6 +38,8 @@ def run_case(name: str, input_file: str, state: str, extra_env: dict, mode: str,
              case_timeout: float = 300.0) -> dict:
     out_path = EX / f"{name}.output.json" if mode == "live" else EX / f"{name}.output.mock.json"
     trace_path = EX / "traces" / mode / f"{name}.jsonl"
+    # 以仓库相对路径传给 CLI，报告里的 trace_path 才不会写死本机目录
+    trace_arg = trace_path.relative_to(ROOT).as_posix()
     state_path = VAR / f"{state}.state.json"
     if name.endswith(".run1") or name in ("case1_normal", "case2_missing_info", "case3_rule_risk",
                                           "case4_slot_conflict", "case6_save_failure"):
@@ -47,12 +49,15 @@ def run_case(name: str, input_file: str, state: str, extra_env: dict, mode: str,
 
     env = dict(os.environ)
     env.update(extra_env)
+    # Windows 中文环境下子进程默认按 GBK 输出，与下面的 utf-8 解码不匹配
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
     cmd = [
         sys.executable, "-m", "src.main",
         "--input", str(EX / input_file),
         "--mode", mode,
         "--state", str(state_path),
-        "--trace", str(trace_path),
+        "--trace", trace_arg,
         "--out", str(out_path),
     ]
     started = time.time()
